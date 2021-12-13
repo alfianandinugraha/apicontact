@@ -1,11 +1,41 @@
 import React from 'react'
 import { NextPage } from 'next'
 import { useRouter } from 'next/router'
-import { Box, Button, Link, TextField, Typography } from '@mui/material'
+import { Box, Button, Link, Typography } from '@mui/material'
 import AuthLayout from '@src/layouts/AuthLayout'
+import TextField from '@src/components/text-field'
+import useTextField from '@src/hooks/useTextField'
+import validator from 'validator'
+import { inputErrorMessage } from '@src/const/messages'
+
+const emailValidator = (e: any) => {
+  if (!validator.isEmail(e.value)) {
+    return inputErrorMessage.INVALID_EMAIL
+  }
+  return e.errorMessage
+}
 
 const LoginPage: NextPage = () => {
+  const [inputEmail, emailHandler] = useTextField({
+    required: true,
+    validator: emailValidator,
+  })
+  const [inputPassword, passwordHandler] = useTextField({
+    required: true,
+  })
   const router = useRouter()
+
+  const submit = () => {
+    emailHandler.checkError()
+    passwordHandler.checkError()
+
+    if (inputEmail.errorMessage || inputPassword.errorMessage) {
+      console.error('Input error !')
+      return
+    }
+
+    console.log('Send request...')
+  }
 
   return (
     <AuthLayout>
@@ -18,13 +48,25 @@ const LoginPage: NextPage = () => {
         >
           Login
         </Typography>
-        <TextField label="Email" fullWidth />
         <TextField
-          label="Password"
           fullWidth
-          style={{ marginBottom: '48px' }}
+          label="Email"
+          onChange={emailHandler.onChange}
+          value={inputEmail.value}
+          error={!!inputEmail.errorMessage}
+          errorMessage={inputEmail.errorMessage}
         />
-        <Button variant="contained" fullWidth>
+        <TextField
+          fullWidth
+          label="Password"
+          type="password"
+          onChange={passwordHandler.onChange}
+          value={inputPassword.value}
+          error={!!inputPassword.errorMessage}
+          errorMessage={inputPassword.errorMessage}
+        />
+        <div style={{ marginBottom: '48px' }} />
+        <Button variant="contained" fullWidth onClick={submit}>
           Masuk
         </Button>
         <Typography
