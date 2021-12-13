@@ -4,7 +4,7 @@ import { useRouter } from 'next/router'
 import { Box, Button, Link, Typography } from '@mui/material'
 import AuthLayout from '@src/layouts/AuthLayout'
 import TextField from '@src/components/text-field'
-import useTextField from '@src/hooks/useTextField'
+import useTextField from '@src/hooks/use-text-field'
 import validator from 'validator'
 import { inputErrorMessage } from '@src/const/messages'
 
@@ -17,12 +17,9 @@ const emailValidator = (e: any) => {
 
 const LoginPage: NextPage = () => {
   const [inputEmail, emailHandler] = useTextField({
-    required: true,
     validator: emailValidator,
   })
-  const [inputPassword, passwordHandler] = useTextField({
-    required: true,
-  })
+  const [inputPassword, passwordHandler] = useTextField()
   const router = useRouter()
 
   const submit = () => {
