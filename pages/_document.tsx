@@ -65,7 +65,7 @@ class HTMLDocument extends Document {
             rel="stylesheet"
           />
         </Head>
-        <body>
+        <body style={{ backgroundColor: '#191919' }}>
           <Main />
           <NextScript />
         </body>
