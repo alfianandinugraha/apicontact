@@ -14,7 +14,7 @@ interface useTextFieldOption {
 
 type DispatchInput = React.Dispatch<React.SetStateAction<InputProps>>
 
-type TextFieldHookType = (props: useTextFieldOption) => [
+type TextFieldHookType = (props?: useTextFieldOption) => [
   InputProps,
   {
     onChange: (e: React.ChangeEvent<HTMLInputElement>) => void
@@ -24,11 +24,12 @@ type TextFieldHookType = (props: useTextFieldOption) => [
   }
 ]
 
-const useTextField: TextFieldHookType = ({
-  initialValue,
-  required,
-  validator,
-}) => {
+const useTextField: TextFieldHookType = (props) => {
+  const { initialValue, required, validator } = props || {
+    initialValue: '',
+    required: true,
+    validator: () => '',
+  }
   const [input, setInput] = useState<InputProps>({ value: initialValue ?? '' })
 
   const checkError = () => {
