@@ -22,7 +22,7 @@ const LoginPage: NextPage = () => {
         <TextField
           label="Password"
           fullWidth
-          style={{ marginTop: '14px', marginBottom: '48px' }}
+          style={{ marginBottom: '48px' }}
         />
         <Button variant="contained" fullWidth>
           Masuk
