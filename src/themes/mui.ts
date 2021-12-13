@@ -36,7 +36,6 @@ const muiTheme = createTheme({
         root: {
           backgroundColor: '#1F232A',
           color: 'white',
-          marginBottom: '14px',
         },
       },
     },
