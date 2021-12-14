@@ -6,6 +6,7 @@ import {
   getDocs,
   query,
   where,
+  deleteDoc,
 } from '@firebase/firestore'
 import { firestore } from '@server/vendors/firebase'
 import { nanoid } from 'nanoid'
@@ -58,10 +59,16 @@ const findById = async (contactId: string) => {
   }
 }
 
+const deleteContact = (contactId: string) => {
+  const contactRef = doc(firestore, 'contacts', contactId)
+  deleteDoc(contactRef)
+}
+
 const contactService = {
   store,
   getAll,
   findById,
+  delete: deleteContact,
 }
 
 export default contactService
