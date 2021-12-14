@@ -1,10 +1,19 @@
-import { httpApi } from '@src/utils/http'
+import { httpApi, httpApiProtected } from '@src/utils/http'
 import {
   LoginUserBodyResponse,
   RegisterUserBodyResponse,
   RegisterUserPayload,
+  UserProfileBodyResponse,
 } from 'types'
 import tokenService from './token'
+
+const getProfile = async () => {
+  const response = await httpApiProtected.get<UserProfileBodyResponse>(
+    '/profile'
+  )
+
+  return response.data
+}
 
 const register = async (payload: RegisterUserPayload) => {
   const response = await httpApi.post<RegisterUserBodyResponse>(
@@ -34,6 +43,7 @@ const userService = {
   register,
   logout,
   login,
+  getProfile,
 }
 
 export default userService
