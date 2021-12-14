@@ -1,10 +1,10 @@
 import React from 'react'
 import { NextPage } from 'next'
-import { Container, Typography } from '@mui/material'
+import { Container } from '@mui/material'
 import ContactForm from '@src/components/contact-form'
 import BaseLayout from '@src/layouts/base-layout'
 import ContactAppBar from '@src/components/contact-app-bar'
-import useAuth from '@src/stores/user'
+import contactService from '@src/services/contact'
 
 const AddContactPage: NextPage = () => {
   return (
@@ -13,9 +13,15 @@ const AddContactPage: NextPage = () => {
       <Container sx={{ mt: '30px', mb: '60px' }}>
         <ContactForm
           variant="ADD"
-          onSubmit={(payload) => {
-            console.log(payload)
-            console.log('Send request...')
+          onSubmit={async (payload) => {
+            const items = payload.contacts
+              .map((item) => item.value)
+              .filter((value) => !!value)
+
+            await contactService.store({
+              ...payload,
+              items,
+            })
           }}
         />
       </Container>

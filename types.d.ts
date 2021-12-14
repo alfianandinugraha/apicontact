@@ -17,7 +17,7 @@ declare module 'types' {
     items: string[]
   }
 
-  export type StoreContactBodyRequest = StoreContactPayload
+  export type StoreContactBodyRequest = Omit<StoreContactPayload, 'userId'>
 
   export type UpdateContactPayload = StoreContactPayload
 
