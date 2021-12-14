@@ -8,7 +8,7 @@ const handler = nc<NextApiRequest, NextApiResponse>().post(async (req, res) => {
   const user = await userService.login(email, password)
 
   if (!user) {
-    return res.json({
+    return res.status(400).json({
       message: 'Invalid email / password',
       body: {},
     })
