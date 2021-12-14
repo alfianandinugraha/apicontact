@@ -6,6 +6,11 @@ declare module 'types' {
     items: { id: string; contact: string }[]
   }
 
+  export interface HttpResponse<T = {}> {
+    message: string
+    body: T
+  }
+
   export type FirebaseUser = {
     id: string
     email: string
