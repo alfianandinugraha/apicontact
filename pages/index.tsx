@@ -1,37 +1,21 @@
 /* eslint-disable @next/next/no-img-element */
-import { Box, Container, Link, styled, Typography } from '@mui/material'
+import {
+  Box,
+  CircularProgress,
+  Container,
+  Link,
+  styled,
+  Typography,
+} from '@mui/material'
 import Navigation from '@src/components/navigation'
 import TextField from '@src/components/text-field'
 import BaseLayout from '@src/layouts/base-layout'
+import contactService from '@src/services/contact'
 import { nanoid } from 'nanoid'
 import type { NextPage } from 'next'
 import { useRouter } from 'next/router'
+import { useEffect, useState } from 'react'
 import { Contact } from 'types'
-
-const contacts: Contact[] = [
-  {
-    id: nanoid(),
-    userId: '1',
-    fullName: 'Alfian Andi',
-    items: [
-      {
-        id: nanoid(),
-        contact: '0813-1458-1924',
-      },
-    ],
-  },
-  {
-    id: nanoid(),
-    userId: '1',
-    fullName: 'Shah Alam',
-    items: [
-      {
-        id: nanoid(),
-        contact: '0813-1458-1924',
-      },
-    ],
-  },
-]
 
 const ContactItem = styled('div')({
   padding: '16px',
@@ -40,7 +24,25 @@ const ContactItem = styled('div')({
 })
 
 const Home: NextPage = () => {
+  const [contacts, setContacts] = useState<Contact[]>([])
+  const [isFetching, setIsFetching] = useState(true)
   const router = useRouter()
+
+  useEffect(() => {
+    const fetchContact = async () => {
+      try {
+        const result = await contactService.getAll()
+        setContacts(result.body)
+        setIsFetching(true)
+      } catch (err) {
+        console.log(err)
+      } finally {
+        setIsFetching(false)
+      }
+    }
+
+    fetchContact()
+  }, [])
 
   return (
     <BaseLayout>
@@ -62,6 +64,15 @@ const Home: NextPage = () => {
         >
           Kontak Shahbae3@gmail.com
         </Typography>
+        {isFetching ? (
+          <Box
+            display="flex"
+            justifyContent="center"
+            sx={{ marginTop: '2rem' }}
+          >
+            <CircularProgress />
+          </Box>
+        ) : null}
         {contacts.map((item) => {
           return (
             <ContactItem
