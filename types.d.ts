@@ -19,6 +19,8 @@ declare module 'types' {
 
   export type StoreContactBodyRequest = StoreContactPayload
 
+  export type UpdateContactPayload = StoreContactPayload
+
   export interface HttpResponse<T = {}> {
     message: string
     body: T

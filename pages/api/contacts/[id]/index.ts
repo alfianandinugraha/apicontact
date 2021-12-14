@@ -8,10 +8,20 @@ import { FirebaseContact } from 'types'
 const handler = nc<NextApiRequest, NextApiResponse>()
   .use(checkToken)
   .use(checkContactId)
-  .put((req, res) => {
+  .put(async (req, res) => {
+    const contact: FirebaseContact = req.body.contactInfo
+    const user: FirebaseContact = req.body.userInfo
+    const { fullName, items }: { fullName: string; items: string[] } = req.body
+
+    const newContact = await contactService.update(contact.id, {
+      userId: user.id,
+      fullName,
+      items,
+    })
+
     return res.json({
       message: 'Update success',
-      body: {},
+      body: newContact,
     })
   })
   .delete(async (req, res) => {

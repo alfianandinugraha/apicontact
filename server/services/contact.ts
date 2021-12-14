@@ -7,10 +7,16 @@ import {
   query,
   where,
   deleteDoc,
+  setDoc,
 } from '@firebase/firestore'
 import { firestore } from '@server/vendors/firebase'
 import { nanoid } from 'nanoid'
-import { Contact, FirebaseContact, StoreContactPayload } from 'types'
+import {
+  Contact,
+  FirebaseContact,
+  StoreContactPayload,
+  UpdateContactPayload,
+} from 'types'
 
 const store = async (payload: StoreContactPayload): Promise<Contact> => {
   const userCollection = collection(firestore, 'contacts')
@@ -64,11 +70,36 @@ const deleteContact = (contactId: string) => {
   deleteDoc(contactRef)
 }
 
+const update = async (
+  contactId: string,
+  payload: UpdateContactPayload
+): Promise<FirebaseContact> => {
+  const contactRef = doc(firestore, 'contacts', contactId)
+  const newItem = payload.items.map((contact) => {
+    return {
+      id: nanoid(),
+      contact,
+    }
+  })
+  const newPayload = {
+    ...payload,
+    items: newItem,
+  }
+
+  await setDoc(contactRef, newPayload)
+
+  return {
+    id: contactId,
+    ...newPayload,
+  }
+}
+
 const contactService = {
   store,
   getAll,
   findById,
   delete: deleteContact,
+  update,
 }
 
 export default contactService
