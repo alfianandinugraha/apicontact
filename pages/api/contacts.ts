@@ -1,4 +1,5 @@
 import checkToken from '@server/middlewares/checkToken'
+import contactService from '@server/services/contact'
 import { NextApiRequest, NextApiResponse } from 'next'
 import nc from 'next-connect'
 import { User } from 'types'
@@ -13,11 +14,19 @@ const handler = nc<NextApiRequest, NextApiResponse>()
       body: [],
     })
   })
-  .post((req, res) => {
+  .post(async (req, res) => {
     const userInfo: User = req.body.userInfo
+    const { fullName, items }: { fullName: string; items: string[] } = req.body
+
+    const resultContact = await contactService.store({
+      items,
+      fullName,
+      userId: userInfo.id,
+    })
+
     return res.json({
       message: 'Saved',
-      body: {},
+      body: resultContact,
     })
   })
 

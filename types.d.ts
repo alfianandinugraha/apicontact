@@ -1,10 +1,23 @@
 declare module 'types' {
-  export type Contact = {
+  export type ContactItem = {
+    id: string
+    contact: string
+  }
+
+  export type FirebaseContact = {
     id: string
     userId: string
     fullName: string
-    items: { id: string; contact: string }[]
+    items: ContactItem[]
   }
+
+  export type Contact = FirebaseContact
+
+  export type StoreContactPayload = Omit<FirebaseContact, 'id' | 'items'> & {
+    items: string[]
+  }
+
+  export type StoreContactBodyRequest = StoreContactPayload
 
   export interface HttpResponse<T = {}> {
     message: string
