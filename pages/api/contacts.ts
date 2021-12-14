@@ -6,12 +6,13 @@ import { User } from 'types'
 
 const handler = nc<NextApiRequest, NextApiResponse>()
   .use(checkToken)
-  .get((req, res) => {
+  .get(async (req, res) => {
     const userInfo: User = req.body.userInfo
+    const contacts = await contactService.getAll(userInfo.id)
 
     return res.json({
       message: 'Success get all contact',
-      body: [],
+      body: contacts,
     })
   })
   .post(async (req, res) => {
