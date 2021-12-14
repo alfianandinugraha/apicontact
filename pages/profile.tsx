@@ -20,9 +20,13 @@ const emailValidator = (e: any) => {
 
 const ProfilePage: NextPage = () => {
   const setUser = useAuth((state) => state.setUser)
-  const [inputName, nameHandler] = useTextField()
+  const user = useAuth((state) => state.user)
+  const [inputName, nameHandler] = useTextField({
+    initialValue: user?.fullName ?? '',
+  })
   const [inputEmail, emailHandler] = useTextField({
     validator: emailValidator,
+    initialValue: user?.email ?? '',
   })
   const [inputPassword, passwordHandler] = useTextField()
   const router = useRouter()
