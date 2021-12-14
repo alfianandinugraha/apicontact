@@ -4,6 +4,7 @@ import { Container, Typography } from '@mui/material'
 import ContactForm from '@src/components/contact-form'
 import BaseLayout from '@src/layouts/base-layout'
 import ContactAppBar from '@src/components/contact-app-bar'
+import useAuth from '@src/stores/user'
 
 const AddContactPage: NextPage = () => {
   return (

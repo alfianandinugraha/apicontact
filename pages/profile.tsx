@@ -9,6 +9,7 @@ import validator from 'validator'
 import { inputErrorMessage } from '@src/const/messages'
 import { useRouter } from 'next/router'
 import userService from '@src/services/user'
+import useAuth from '@src/stores/user'
 
 const emailValidator = (e: any) => {
   if (!validator.isEmail(e.value)) {
@@ -18,6 +19,7 @@ const emailValidator = (e: any) => {
 }
 
 const ProfilePage: NextPage = () => {
+  const setUser = useAuth((state) => state.setUser)
   const [inputName, nameHandler] = useTextField()
   const [inputEmail, emailHandler] = useTextField({
     validator: emailValidator,
@@ -50,6 +52,7 @@ const ProfilePage: NextPage = () => {
             onClick={() => {
               router.push('login')
               userService.logout()
+              setUser(undefined)
             }}
           >
             Logout <Logout sx={{ width: '14px', height: '14px', ml: '4px' }} />

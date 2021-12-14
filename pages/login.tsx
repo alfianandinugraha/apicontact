@@ -8,6 +8,7 @@ import useTextField from '@src/hooks/use-text-field'
 import validator from 'validator'
 import { inputErrorMessage } from '@src/const/messages'
 import userService from '@src/services/user'
+import useAuth from '@src/stores/user'
 
 const emailValidator = (e: any) => {
   if (!validator.isEmail(e.value)) {
@@ -17,6 +18,7 @@ const emailValidator = (e: any) => {
 }
 
 const LoginPage: NextPage = () => {
+  const setUser = useAuth((state) => state.setUser)
   const [inputEmail, emailHandler] = useTextField({
     validator: emailValidator,
   })
@@ -33,7 +35,11 @@ const LoginPage: NextPage = () => {
     }
 
     try {
-      await userService.login(inputEmail.value, inputPassword.value)
+      const result = await userService.login(
+        inputEmail.value,
+        inputPassword.value
+      )
+      setUser(result.body.user)
       router.push('/')
     } catch (err) {
       console.error(err)
