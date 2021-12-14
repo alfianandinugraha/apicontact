@@ -4,6 +4,7 @@ import TextField from '@src/components/text-field'
 import useTextField from '@src/hooks/use-text-field'
 import { nanoid } from 'nanoid'
 import React, { useState } from 'react'
+import { Contact } from 'types'
 
 type InputArrayItemProps = {
   id: string
@@ -19,17 +20,31 @@ type ContactFormPayload = {
 type ContactFormProps = {
   variant: 'ADD' | 'EDIT'
   onSubmit: (payload: ContactFormPayload) => void
+  initialItem?: Contact
 }
 
 const ContactForm = (props: ContactFormProps) => {
-  const [inputName, nameHandler] = useTextField()
-  const [listContact, setListContact] = useState<InputArrayItemProps[]>([
-    {
-      id: nanoid(),
-      value: '',
+  const initialListContact: InputArrayItemProps[] | undefined =
+    props.initialItem?.items.map((item) => ({
+      id: item.id,
+      value: item.contact,
       errorMessage: '',
-    },
-  ])
+    }))
+
+  const [inputName, nameHandler] = useTextField({
+    initialValue: props.initialItem ? props.initialItem.fullName : '',
+  })
+  const [listContact, setListContact] = useState<InputArrayItemProps[]>(
+    initialListContact
+      ? initialListContact
+      : [
+          {
+            id: nanoid(),
+            value: '',
+            errorMessage: '',
+          },
+        ]
+  )
 
   const submit = () => {
     const isNameError = nameHandler.checkError()
