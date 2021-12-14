@@ -13,6 +13,20 @@ const muiTheme = createTheme({
     },
   },
   components: {
+    MuiBottomNavigationAction: {
+      styleOverrides: {
+        root: {
+          color: 'white',
+        },
+      },
+    },
+    MuiBottomNavigation: {
+      styleOverrides: {
+        root: {
+          backgroundColor: '#537EC5',
+        },
+      },
+    },
     MuiLink: {
       styleOverrides: {
         root: {
