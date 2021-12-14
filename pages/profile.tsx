@@ -8,6 +8,7 @@ import useTextField from '@src/hooks/use-text-field'
 import validator from 'validator'
 import { inputErrorMessage } from '@src/const/messages'
 import { useRouter } from 'next/router'
+import userService from '@src/services/user'
 
 const emailValidator = (e: any) => {
   if (!validator.isEmail(e.value)) {
@@ -46,7 +47,10 @@ const ProfilePage: NextPage = () => {
             variant="caption"
             color="error"
             sx={{ display: 'flex', alignItems: 'center', cursor: 'pointer' }}
-            onClick={() => router.push('login')}
+            onClick={() => {
+              router.push('login')
+              userService.logout()
+            }}
           >
             Logout <Logout sx={{ width: '14px', height: '14px', ml: '4px' }} />
           </Typography>

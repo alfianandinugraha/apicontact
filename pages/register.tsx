@@ -7,6 +7,9 @@ import AuthLayout from '@src/layouts/AuthLayout'
 import useTextField from '@src/hooks/use-text-field'
 import validator from 'validator'
 import { inputErrorMessage } from '@src/const/messages'
+import { RegisterUserPayload } from 'types'
+import userService from '@src/services/user'
+import tokenService from '@src/services/token'
 
 const emailValidator = (e: any) => {
   if (!validator.isEmail(e.value)) {
@@ -22,7 +25,7 @@ const LoginPage: NextPage = () => {
   const [inputRePassword, rePasswordHandler] = useTextField()
   const router = useRouter()
 
-  const submit = () => {
+  const submit = async () => {
     const isNameError = nameHandler.checkError()
     const isEmailError = emailHandler.checkError()
     const isPasswordError = passwordHandler.checkError()
@@ -33,7 +36,18 @@ const LoginPage: NextPage = () => {
       return
     }
 
-    console.log('Send request...')
+    const payload: RegisterUserPayload = {
+      email: inputEmail.value,
+      password: inputPassword.value,
+      fullName: inputName.value,
+    }
+
+    try {
+      const result = await userService.register(payload)
+      router.push('/')
+    } catch (err) {
+      console.error(err)
+    }
   }
 
   return (

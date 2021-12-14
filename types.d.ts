@@ -38,4 +38,9 @@ declare module 'types' {
   export type User = Omit<FirebaseUser, 'password'>
 
   export type UpdateUserPayload = Omit<FirebaseUser, 'id'>
+
+  export type RegisterUserBodyResponse = HttpResponse<{
+    token: string
+    user: User
+  }>
 }
