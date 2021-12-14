@@ -28,9 +28,12 @@ const getAll = async (userId: string) => {
   const contactQuery = query(contactCollection, where('userId', '==', userId))
 
   const contactDocs = await getDocs(contactQuery)
-  const contacts: FirebaseContact[] = contactDocs.docs.map((doc) =>
-    doc.data()
-  ) as FirebaseContact[]
+  const contacts: FirebaseContact[] = contactDocs.docs.map((doc) => {
+    return {
+      id: doc.id,
+      ...doc.data(),
+    }
+  }) as FirebaseContact[]
 
   return contacts
 }
