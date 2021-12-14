@@ -5,8 +5,11 @@ import ContactForm from '@src/components/contact-form'
 import BaseLayout from '@src/layouts/base-layout'
 import ContactAppBar from '@src/components/contact-app-bar'
 import contactService from '@src/services/contact'
+import { useRouter } from 'next/router'
 
 const AddContactPage: NextPage = () => {
+  const router = useRouter()
+
   return (
     <BaseLayout>
       <ContactAppBar variant="ADD" />
@@ -22,6 +25,8 @@ const AddContactPage: NextPage = () => {
               ...payload,
               items,
             })
+
+            router.back()
           }}
         />
       </Container>
