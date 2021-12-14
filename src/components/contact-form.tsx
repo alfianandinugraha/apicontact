@@ -102,7 +102,7 @@ const ContactForm = (props: ContactFormProps) => {
         Tambah Telepon Lagi
       </Button>
       <Button fullWidth color="primary" variant="contained" onClick={submit}>
-        Tambah
+        {props.variant === 'ADD' ? 'Tambah' : 'Simpan'}
       </Button>
     </Box>
   )
