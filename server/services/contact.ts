@@ -1,4 +1,12 @@
-import { addDoc, collection, getDocs, query, where } from '@firebase/firestore'
+import {
+  addDoc,
+  collection,
+  doc,
+  getDoc,
+  getDocs,
+  query,
+  where,
+} from '@firebase/firestore'
 import { firestore } from '@server/vendors/firebase'
 import { nanoid } from 'nanoid'
 import { Contact, FirebaseContact, StoreContactPayload } from 'types'
@@ -38,9 +46,22 @@ const getAll = async (userId: string) => {
   return contacts
 }
 
+const findById = async (contactId: string) => {
+  const userRef = doc(firestore, 'contacts', contactId)
+  const userDoc = await getDoc(userRef)
+
+  if (!userDoc.exists()) return undefined
+  const result = userDoc.data() as FirebaseContact
+  return {
+    ...result,
+    id: userDoc.id,
+  }
+}
+
 const contactService = {
   store,
   getAll,
+  findById,
 }
 
 export default contactService
