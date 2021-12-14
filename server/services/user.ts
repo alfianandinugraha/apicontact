@@ -9,8 +9,15 @@ import {
   where,
   getDoc,
   doc,
+  setDoc,
 } from 'firebase/firestore'
-import { FirebaseUser, RegisterUserPayload, User } from 'types'
+import {
+  FirebaseUser,
+  RegisterUserPayload,
+  UpdateContactPayload,
+  UpdateUserPayload,
+  User,
+} from 'types'
 
 const getUserDocByEmail = async (email: string) => {
   const userCollection = collection(firestore, 'users')
@@ -84,11 +91,32 @@ const login = async (email: string, password: string) => {
   return undefined
 }
 
+const update = async (
+  userId: string,
+  payload: UpdateUserPayload
+): Promise<User> => {
+  const userRef = doc(firestore, 'users', userId)
+  const newPassword = bcrypt.hashSync(payload.password, bcrypt.genSaltSync(4))
+  const newPayload = {
+    ...payload,
+    password: newPassword,
+  }
+
+  await setDoc(userRef, newPayload)
+
+  return {
+    id: userId,
+    email: newPayload.email,
+    fullName: newPayload.fullName,
+  }
+}
+
 const userService = {
   register,
   findByEmail,
   login,
   findUserById,
+  update,
 }
 
 export default userService
