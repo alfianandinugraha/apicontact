@@ -7,6 +7,7 @@ import TextField from '@src/components/text-field'
 import useTextField from '@src/hooks/use-text-field'
 import validator from 'validator'
 import { inputErrorMessage } from '@src/const/messages'
+import userService from '@src/services/user'
 
 const emailValidator = (e: any) => {
   if (!validator.isEmail(e.value)) {
@@ -22,7 +23,7 @@ const LoginPage: NextPage = () => {
   const [inputPassword, passwordHandler] = useTextField()
   const router = useRouter()
 
-  const submit = () => {
+  const submit = async () => {
     const isEmailError = emailHandler.checkError()
     const isPasswordError = passwordHandler.checkError()
 
@@ -31,7 +32,12 @@ const LoginPage: NextPage = () => {
       return
     }
 
-    console.log('Send request...')
+    try {
+      await userService.login(inputEmail.value, inputPassword.value)
+      router.push('/')
+    } catch (err) {
+      console.error(err)
+    }
   }
 
   return (

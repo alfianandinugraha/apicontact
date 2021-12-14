@@ -43,4 +43,6 @@ declare module 'types' {
     token: string
     user: User
   }>
+
+  export type LoginUserBodyResponse = RegisterUserBodyResponse
 }
