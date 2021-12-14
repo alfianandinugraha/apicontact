@@ -1,7 +1,15 @@
 import jwt from '@server/utils/jwt'
 import { firestore } from '@server/vendors/firebase'
 import bcrypt from 'bcrypt'
-import { addDoc, collection, getDocs, query, where } from 'firebase/firestore'
+import {
+  addDoc,
+  collection,
+  getDocs,
+  query,
+  where,
+  getDoc,
+  doc,
+} from 'firebase/firestore'
 import { FirebaseUser, RegisterUserPayload, User } from 'types'
 
 const getUserDocByEmail = async (email: string) => {
@@ -9,6 +17,15 @@ const getUserDocByEmail = async (email: string) => {
   const userQuery = query(userCollection, where('email', '==', email))
 
   return await getDocs(userQuery)
+}
+
+const findUserById = async (userId: string): Promise<User | undefined> => {
+  const userRef = doc(firestore, 'users', userId)
+  const userDoc = await getDoc(userRef)
+
+  if (!userDoc.exists()) return undefined
+
+  return userDoc.data() as User
 }
 
 const findByEmail = async (email: string): Promise<User | undefined> => {
@@ -71,6 +88,7 @@ const userService = {
   register,
   findByEmail,
   login,
+  findUserById,
 }
 
 export default userService
