@@ -7,24 +7,37 @@ import { HttpResponse } from 'types'
 
 const handler = nc<NextApiRequest, NextApiResponse<HttpResponse>>().post(
   async (req, res) => {
+    console.log('register user...')
     const email = req.body.email
     const fullName = req.body.fullName
     const password = req.body.password
 
-    const encryptPassword = bcrypt.hashSync(password, bcrypt.genSaltSync(16))
+    const findUser = await userService.findByEmail(email)
 
-    const userId = userService.register({
+    if (findUser) {
+      console.log('User was registered...')
+      return res.status(400).json({
+        message: 'Email was registered',
+        body: {},
+      })
+    }
+
+    const encryptPassword = bcrypt.hashSync(password, bcrypt.genSaltSync(4))
+
+    const user = await userService.register({
       email,
       fullName,
       password: encryptPassword,
     })
 
-    const token = jwt.sign({ userId })
+    const token = jwt.sign({ userId: user.id })
 
+    console.log('Register user successfully')
     return res.json({
       message: 'Register successfully',
       body: {
         token,
+        user,
       },
     })
   }
