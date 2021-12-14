@@ -45,4 +45,6 @@ declare module 'types' {
   }>
 
   export type LoginUserBodyResponse = RegisterUserBodyResponse
+
+  export type UserProfileBodyResponse = HttpResponse<User>
 }
