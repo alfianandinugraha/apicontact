@@ -13,5 +13,12 @@ const handler = nc<NextApiRequest, NextApiResponse>()
       body: [],
     })
   })
+  .post((req, res) => {
+    const userInfo: User = req.body.userInfo
+    return res.json({
+      message: 'Saved',
+      body: {},
+    })
+  })
 
 export default handler
