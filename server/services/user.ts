@@ -1,12 +1,18 @@
+import jwt from '@server/utils/jwt'
 import { firestore } from '@server/vendors/firebase'
+import bcrypt from 'bcrypt'
 import { addDoc, collection, getDocs, query, where } from 'firebase/firestore'
-import { RegisterUserPayload, User } from 'types'
+import { FirebaseUser, RegisterUserPayload, User } from 'types'
 
-const findByEmail = async (email: string): Promise<User | undefined> => {
+const getUserDocByEmail = async (email: string) => {
   const userCollection = collection(firestore, 'users')
   const userQuery = query(userCollection, where('email', '==', email))
 
-  const userDoc = await getDocs(userQuery)
+  return await getDocs(userQuery)
+}
+
+const findByEmail = async (email: string): Promise<User | undefined> => {
+  const userDoc = await getUserDocByEmail(email)
 
   const user: User | undefined = userDoc.docs.map((doc) => {
     const result = doc.data()
@@ -31,9 +37,40 @@ const register = async (payload: RegisterUserPayload): Promise<User> => {
   }
 }
 
+const login = async (email: string, password: string) => {
+  const userDoc = await getUserDocByEmail(email)
+
+  const user: FirebaseUser | undefined = userDoc.docs.map((doc) => {
+    const result = doc.data()
+    return {
+      id: doc.id,
+      email: result.email,
+      fullName: result.fullName,
+      password: result.password,
+    }
+  })[0]
+
+  if (!user) return undefined
+
+  const isValid = bcrypt.compareSync(password, user.password)
+  if (isValid) {
+    return {
+      userInfo: {
+        id: user.id,
+        email: user.email,
+        fullName: user.fullName,
+      },
+      token: jwt.sign({ userId: user.id }),
+    }
+  }
+
+  return undefined
+}
+
 const userService = {
   register,
   findByEmail,
+  login,
 }
 
 export default userService
