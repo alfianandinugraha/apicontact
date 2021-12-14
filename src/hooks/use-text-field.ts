@@ -18,7 +18,7 @@ type TextFieldHookType = (props?: useTextFieldOption) => [
   InputProps,
   {
     onChange: (e: React.ChangeEvent<HTMLInputElement>) => void
-    checkError: () => void
+    checkError: () => boolean
     setInput: DispatchInput
     subscribe: (func: (props: InputProps) => void) => void
   }
@@ -35,13 +35,18 @@ const useTextField: TextFieldHookType = (props) => {
   const checkError = () => {
     if (input.errorMessage) {
       setInput(input)
-      return
+      return true
     }
 
-    setInput({
-      ...input,
-      errorMessage: input.value ? '' : inputErrorMessage.EMPTY,
-    })
+    if (!input.value) {
+      setInput({
+        ...input,
+        errorMessage: input.value ? '' : inputErrorMessage.EMPTY,
+      })
+      return true
+    }
+
+    return false
   }
 
   const subscribe = (func: (props: InputProps) => void) => {

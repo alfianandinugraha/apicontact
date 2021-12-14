@@ -23,10 +23,10 @@ const LoginPage: NextPage = () => {
   const router = useRouter()
 
   const submit = () => {
-    emailHandler.checkError()
-    passwordHandler.checkError()
+    const isEmailError = emailHandler.checkError()
+    const isPasswordError = passwordHandler.checkError()
 
-    if (inputEmail.errorMessage || inputPassword.errorMessage) {
+    if (isEmailError || isPasswordError) {
       console.error('Input error !')
       return
     }
