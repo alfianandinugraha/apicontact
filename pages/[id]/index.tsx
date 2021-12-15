@@ -7,6 +7,8 @@ import { Contact } from 'types'
 import contactService from '@src/services/contact'
 import Loading from '@src/components/loading'
 import { Edit } from '@mui/icons-material'
+import toast from 'react-hot-toast'
+import Toast from '@src/components/toast'
 
 const SinglePageContact: NextPage = () => {
   const [isLoading, setIsLoading] = useState(true)
@@ -16,6 +18,15 @@ const SinglePageContact: NextPage = () => {
   const contactId = useMemo(() => {
     return router.query.id as string
   }, [router.query])
+
+  const copy = async (content: string) => {
+    try {
+      await navigator.clipboard.writeText(content)
+      toast.success(<Toast>Berhasil disalin</Toast>)
+    } catch (err) {
+      console.error(err)
+    }
+  }
 
   useEffect(() => {
     if (!contactId) {
@@ -81,6 +92,9 @@ const SinglePageContact: NextPage = () => {
                   variant="caption"
                   color="primary"
                   sx={{ ml: '12px', cursor: 'pointer' }}
+                  onClick={() => {
+                    copy(item.contact)
+                  }}
                 >
                   salin
                 </Typography>
