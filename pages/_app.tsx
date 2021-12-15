@@ -5,6 +5,7 @@ import { useEffect } from 'react'
 import userService from '@src/services/user'
 import shallow from 'zustand/shallow'
 import useAuth from '@src/stores/user'
+import { Toaster } from 'react-hot-toast'
 
 function MyApp({ Component, pageProps, router }: AppProps) {
   const { setUser, setIsLoading } = useAuth(
@@ -33,6 +34,7 @@ function MyApp({ Component, pageProps, router }: AppProps) {
 
   return (
     <ThemeProvider theme={muiTheme}>
+      <Toaster position="top-center" />
       <Component {...pageProps} />
     </ThemeProvider>
   )

@@ -9,7 +9,9 @@ import validator from 'validator'
 import { inputErrorMessage } from '@src/const/messages'
 import { RegisterUserPayload } from 'types'
 import userService from '@src/services/user'
+import toast from 'react-hot-toast'
 import tokenService from '@src/services/token'
+import Toast from '@src/components/toast'
 
 const emailValidator = (e: any) => {
   if (!validator.isEmail(e.value)) {
@@ -46,6 +48,9 @@ const LoginPage: NextPage = () => {
       const result = await userService.register(payload)
       router.push('/')
     } catch (err) {
+      if (err.response) {
+        toast.error(<Toast>{err.response.data.message}</Toast>)
+      }
       console.error(err)
     }
   }
