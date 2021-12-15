@@ -1,17 +1,14 @@
 import jsonwebtoken, { JwtPayload } from 'jsonwebtoken'
 
 const sign = (payload: object) => {
-  return jsonwebtoken.sign(payload, process.env.NEXT_APP_JWT_SECRET_KEY ?? '', {
+  return jsonwebtoken.sign(payload, process.env.JWT_SECRET_KEY ?? '', {
     expiresIn: '7d',
   })
 }
 
 const verify = (token: string) => {
   try {
-    const result = jsonwebtoken.verify(
-      token,
-      process.env.NEXT_APP_JWT_SECRET_KEY ?? ''
-    )
+    const result = jsonwebtoken.verify(token, process.env.JWT_SECRET_KEY ?? '')
 
     return result
   } catch (err) {
