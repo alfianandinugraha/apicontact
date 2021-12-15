@@ -5,10 +5,10 @@ import { useRouter } from 'next/router'
 import ContactAppBar from '@src/components/contact-app-bar'
 import ContactForm from '@src/components/contact-form'
 import { Contact } from 'types'
-import { nanoid } from 'nanoid'
-import userService from '@src/services/user'
 import contactService from '@src/services/contact'
 import Loading from '@src/components/loading'
+import toast from 'react-hot-toast'
+import Toast from '@src/components/toast'
 
 const EditContactPage: NextPage = () => {
   const [isLoading, setIsLoading] = useState(true)
@@ -60,9 +60,21 @@ const EditContactPage: NextPage = () => {
           <ContactForm
             variant="EDIT"
             initialItem={contact}
-            onSubmit={(payload) => {
-              console.log(payload)
+            onSubmit={async (payload) => {
+              const newItems = payload.contacts.map((item) => item.value)
               console.log('Send request...')
+
+              try {
+                const result = await contactService.update(contactId, {
+                  fullName: payload.fullName,
+                  items: newItems,
+                })
+                setContact(result.body)
+                toast.success(<Toast>Update berhasil</Toast>)
+              } catch (err: any) {
+                console.error(err)
+                toast.success(<Toast>Terjadi kesalahan</Toast>)
+              }
             }}
           />
         ) : null}

@@ -1,5 +1,10 @@
 import { httpApiProtected } from '@src/utils/http'
-import { Contact, HttpResponse, StoreContactBodyRequest } from 'types'
+import {
+  Contact,
+  HttpResponse,
+  StoreContactBodyRequest,
+  UpdateContactBodyRequest,
+} from 'types'
 
 const store = async (payload: StoreContactBodyRequest) => {
   await httpApiProtected.post('/contacts', payload)
@@ -26,11 +31,20 @@ const deleteContact = async (contactId: string) => {
   return response.data
 }
 
+const update = async (contactId: string, payload: UpdateContactBodyRequest) => {
+  const response = await httpApiProtected.put<HttpResponse<Contact>>(
+    `/contacts/${contactId}`,
+    payload
+  )
+  return response.data
+}
+
 const contactService = {
   store,
   getAll,
   getById,
   delete: deleteContact,
+  update,
 }
 
 export default contactService
