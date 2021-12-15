@@ -7,7 +7,7 @@ type ToastProps = {
 
 const Toast = (props: ToastProps) => {
   return (
-    <Typography color="black">
+    <Typography color="black" fontSize={14}>
       {props.children ?? 'Terjadi kesalahan'}
     </Typography>
   )
