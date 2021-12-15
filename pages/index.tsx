@@ -1,13 +1,14 @@
 /* eslint-disable @next/next/no-img-element */
 import { Container, styled, Typography } from '@mui/material'
 import Loading from '@src/components/loading'
-import TextField from '@src/components/text-field'
+import SearchTextField from '@src/components/search-input'
+import useTextField from '@src/hooks/use-text-field'
 import BaseLayout from '@src/layouts/base-layout'
 import contactService from '@src/services/contact'
 import useAuth from '@src/stores/user'
 import type { NextPage } from 'next'
 import { useRouter } from 'next/router'
-import { useEffect, useState } from 'react'
+import { useCallback, useEffect, useState } from 'react'
 import { Contact } from 'types'
 
 const ContactItem = styled('div')({
@@ -19,24 +20,24 @@ const ContactItem = styled('div')({
 const Home: NextPage = () => {
   const user = useAuth((state) => state.user)
   const [contacts, setContacts] = useState<Contact[]>([])
+  const [query, setQuery] = useState('')
   const [isFetching, setIsFetching] = useState(true)
   const router = useRouter()
 
   useEffect(() => {
+    setIsFetching(true)
     const fetchContact = async () => {
       try {
-        const result = await contactService.getAll()
+        const result = await contactService.getAll(query)
         setContacts(result.body)
-        setIsFetching(true)
       } catch (err) {
         console.log(err)
       } finally {
         setIsFetching(false)
       }
     }
-
     fetchContact()
-  }, [])
+  }, [query])
 
   return (
     <BaseLayout>
@@ -48,7 +49,15 @@ const Home: NextPage = () => {
         >
           APIContact
         </Typography>
-        <TextField label="Cari kontak disini" />
+        <SearchTextField
+          onChange={() => {
+            setIsFetching(true)
+            setContacts([])
+          }}
+          onChangeDebounce={(value) => {
+            setQuery(value)
+          }}
+        />
         <Typography
           variant="caption"
           style={{

@@ -10,10 +10,9 @@ const store = async (payload: StoreContactBodyRequest) => {
   await httpApiProtected.post('/contacts', payload)
 }
 
-const getAll = async () => {
-  const response = await httpApiProtected.get<HttpResponse<Contact[]>>(
-    '/contacts'
-  )
+const getAll = async (searchKeyword: string = '') => {
+  const endpoint = searchKeyword ? `/contacts?q=${searchKeyword}` : '/contacts'
+  const response = await httpApiProtected.get<HttpResponse<Contact[]>>(endpoint)
   return response.data
 }
 
