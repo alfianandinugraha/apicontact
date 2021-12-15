@@ -72,7 +72,7 @@ const Home: NextPage = () => {
           <ContactItem
             key={item.id}
             onClick={() => {
-              router.push(`/${item.id}/edit`)
+              router.push(`/${item.id}`)
             }}
           >
             <Typography>{item.fullName}</Typography>
