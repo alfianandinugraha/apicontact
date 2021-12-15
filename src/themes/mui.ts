@@ -50,6 +50,14 @@ const muiTheme = createTheme({
         root: {
           backgroundColor: '#1F232A',
           color: 'white',
+          borderRadius: '8px 8px 0 0',
+        },
+      },
+    },
+    MuiButton: {
+      styleOverrides: {
+        root: {
+          borderRadius: '8px',
         },
       },
     },
