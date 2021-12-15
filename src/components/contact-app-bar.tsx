@@ -1,5 +1,6 @@
 import { Close, MoreVert } from '@mui/icons-material'
 import { AppBar, Toolbar, Typography } from '@mui/material'
+import useAuth from '@src/stores/user'
 import { useRouter } from 'next/router'
 import React from 'react'
 
@@ -8,6 +9,7 @@ type ContactAppBarProps = {
 }
 
 const ContactAppBar = (props: ContactAppBarProps) => {
+  const user = useAuth((state) => state.user)
   const router = useRouter()
 
   return (
@@ -37,7 +39,7 @@ const ContactAppBar = (props: ContactAppBarProps) => {
           py: '8px',
         }}
       >
-        Kontak Shahbae3@gmail.com
+        Kontak {user?.email ?? ''}
       </Typography>
     </>
   )
