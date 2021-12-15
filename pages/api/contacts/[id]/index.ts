@@ -8,6 +8,12 @@ import { FirebaseContact } from 'types'
 const handler = nc<NextApiRequest, NextApiResponse>()
   .use(checkToken)
   .use(checkContactId)
+  .get((req, res) => {
+    return res.json({
+      message: 'Get contact success',
+      body: req.body.contactInfo,
+    })
+  })
   .put(async (req, res) => {
     const contact: FirebaseContact = req.body.contactInfo
     const user: FirebaseContact = req.body.userInfo
