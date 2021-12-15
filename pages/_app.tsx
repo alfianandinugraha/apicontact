@@ -1,21 +1,30 @@
 import type { AppProps } from 'next/app'
 import { ThemeProvider } from '@mui/material'
 import muiTheme from '@src/themes/mui'
-import { useEffect, useState } from 'react'
+import { useEffect } from 'react'
 import userService from '@src/services/user'
 import shallow from 'zustand/shallow'
 import useAuth from '@src/stores/user'
 
 function MyApp({ Component, pageProps, router }: AppProps) {
-  const auth = useAuth((state) => state, shallow)
+  const { setUser, setIsLoading } = useAuth(
+    (state) => ({
+      setUser: state.setUser,
+      setIsLoading: state.setIsLoading,
+    }),
+    shallow
+  )
 
   useEffect(() => {
     const getProfile = async () => {
       try {
         const result = await userService.getProfile()
-        auth.setUser(result.body)
+        setUser(result.body)
+        setIsLoading(true)
       } catch (err) {
-        auth.setUser(undefined)
+        setUser(undefined)
+      } finally {
+        setIsLoading(false)
       }
     }
 
