@@ -10,18 +10,18 @@ const handler = nc<NextApiRequest, NextApiResponse>()
     const userInfo: User = req.body.userInfo
     const contacts = await contactService.getAll(userInfo.id)
 
-    const searchQuery = req.query.q.toString() ?? ''
+    let searchQuery = req.query.q ?? ''
 
     if (searchQuery) {
+      let keyword = searchQuery.toString()
       const filteredContacts = contacts.filter((item) =>
-        item.fullName.toLocaleLowerCase().includes(searchQuery)
+        item.fullName.toLocaleLowerCase().includes(keyword)
       )
       return res.json({
         message: 'Success get all contact',
         body: filteredContacts,
       })
     }
-
     return res.json({
       message: 'Success get all contact',
       body: contacts,
