@@ -10,20 +10,9 @@ import userService from '@src/services/user'
 import contactService from '@src/services/contact'
 import Loading from '@src/components/loading'
 
-const contacts: Contact = {
-  id: nanoid(),
-  userId: '1',
-  fullName: 'Alfian Andi',
-  items: [
-    {
-      id: nanoid(),
-      contact: '0813-1458-1924',
-    },
-  ],
-}
-
 const EditContactPage: NextPage = () => {
   const [isLoading, setIsLoading] = useState(true)
+  const [contact, setContact] = useState<Contact | null>(null)
   const router = useRouter()
 
   const contactId = useMemo(() => {
@@ -38,6 +27,7 @@ const EditContactPage: NextPage = () => {
     const getProfile = async () => {
       try {
         const result = await contactService.getById(contactId)
+        setContact(result.body)
         setIsLoading(true)
       } catch (err) {
         console.error(err)
@@ -55,16 +45,16 @@ const EditContactPage: NextPage = () => {
       <Container sx={{ mt: '30px', mb: '60px' }}>
         {isLoading ? (
           <Loading />
-        ) : (
+        ) : contact ? (
           <ContactForm
             variant="EDIT"
-            initialItem={contacts}
+            initialItem={contact}
             onSubmit={(payload) => {
               console.log(payload)
               console.log('Send request...')
             }}
           />
-        )}
+        ) : null}
       </Container>
     </>
   )
