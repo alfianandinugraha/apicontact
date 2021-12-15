@@ -1,5 +1,6 @@
 import { httpApi, httpApiProtected } from '@src/utils/http'
 import {
+  Contact,
   HttpResponse,
   LoginUserBodyResponse,
   RegisterUserBodyResponse,

@@ -12,9 +12,17 @@ const getAll = async () => {
   return response.data
 }
 
+const getById = async (contactId: string) => {
+  const response = await httpApiProtected.get<HttpResponse<Contact>>(
+    `/contacts/${contactId}`
+  )
+  return response.data
+}
+
 const contactService = {
   store,
   getAll,
+  getById,
 }
 
 export default contactService
