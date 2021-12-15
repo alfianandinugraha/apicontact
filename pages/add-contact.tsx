@@ -5,7 +5,9 @@ import ContactForm from '@src/components/contact-form'
 import BaseLayout from '@src/layouts/base-layout'
 import ContactAppBar from '@src/components/contact-app-bar'
 import contactService from '@src/services/contact'
+import toast from 'react-hot-toast'
 import { useRouter } from 'next/router'
+import Toast from '@src/components/toast'
 
 const AddContactPage: NextPage = () => {
   const router = useRouter()
@@ -21,12 +23,17 @@ const AddContactPage: NextPage = () => {
             .map((item) => item.value)
             .filter((value) => !!value)
 
-          await contactService.store({
-            ...payload,
-            items,
-          })
-
-          router.back()
+          try {
+            await contactService.store({
+              ...payload,
+              items,
+            })
+            router.back()
+          } catch (err: any) {
+            if (err.response) {
+              toast.error(<Toast>{err.response.data.message}</Toast>)
+            }
+          }
         }}
       />
     </BaseLayout>

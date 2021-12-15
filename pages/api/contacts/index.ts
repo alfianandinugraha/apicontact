@@ -1,8 +1,12 @@
 import checkToken from '@server/middlewares/checkToken'
+import requireBody from '@server/middlewares/requireBody'
+import { storeContactBodySchema } from '@server/schemas/contactRequest'
 import contactService from '@server/services/contact'
+import { JSONSchemaType } from 'ajv'
 import { NextApiRequest, NextApiResponse } from 'next'
 import nc from 'next-connect'
-import { User } from 'types'
+import { StoreContactBodyRequest, User } from 'types'
+import validator from 'validator'
 
 const handler = nc<NextApiRequest, NextApiResponse>()
   .use(checkToken)
@@ -27,9 +31,18 @@ const handler = nc<NextApiRequest, NextApiResponse>()
       body: contacts,
     })
   })
-  .post(async (req, res) => {
-    const userInfo: User = req.body.userInfo
+  .post(requireBody(storeContactBodySchema), async (req, res) => {
     const { fullName, items }: { fullName: string; items: string[] } = req.body
+    const isValidPhone = items.every((item) => validator.isMobilePhone(item))
+
+    if (!isValidPhone) {
+      return res.status(400).json({
+        message: 'Harap masukkan data dengan benar',
+        body: {},
+      })
+    }
+
+    const userInfo: User = req.body.userInfo
 
     const resultContact = await contactService.store({
       items,
@@ -39,7 +52,7 @@ const handler = nc<NextApiRequest, NextApiResponse>()
 
     return res.json({
       message: 'Saved',
-      body: resultContact,
+      body: {},
     })
   })
 

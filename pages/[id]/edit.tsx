@@ -72,7 +72,9 @@ const EditContactPage: NextPage = () => {
               toast.success(<Toast>Update berhasil</Toast>)
             } catch (err: any) {
               console.error(err)
-              toast.success(<Toast>Terjadi kesalahan</Toast>)
+              if (err.response) {
+                toast.error(<Toast>{err.response.data.message}</Toast>)
+              }
             }
           }}
         />
