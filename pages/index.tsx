@@ -1,18 +1,10 @@
 /* eslint-disable @next/next/no-img-element */
-import {
-  Box,
-  CircularProgress,
-  Container,
-  Link,
-  styled,
-  Typography,
-} from '@mui/material'
-import Navigation from '@src/components/navigation'
+import { Container, styled, Typography } from '@mui/material'
+import Loading from '@src/components/loading'
 import TextField from '@src/components/text-field'
 import BaseLayout from '@src/layouts/base-layout'
 import contactService from '@src/services/contact'
 import useAuth from '@src/stores/user'
-import { nanoid } from 'nanoid'
 import type { NextPage } from 'next'
 import { useRouter } from 'next/router'
 import { useEffect, useState } from 'react'
@@ -66,15 +58,7 @@ const Home: NextPage = () => {
         >
           Kontak {user?.email ?? 'Shahbae3@gmail.com'}
         </Typography>
-        {isFetching ? (
-          <Box
-            display="flex"
-            justifyContent="center"
-            sx={{ marginTop: '2rem' }}
-          >
-            <CircularProgress />
-          </Box>
-        ) : null}
+        {isFetching ? <Loading label="Memuat data kontak" /> : null}
         {contacts.map((item) => {
           return (
             <ContactItem
