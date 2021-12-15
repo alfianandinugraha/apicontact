@@ -1,9 +1,9 @@
 import { Add, Close } from '@mui/icons-material'
-import { Box, Button } from '@mui/material'
+import { Box, Button, Typography } from '@mui/material'
 import TextField from '@src/components/text-field'
 import useTextField from '@src/hooks/use-text-field'
 import { nanoid } from 'nanoid'
-import React, { useState } from 'react'
+import React, { useMemo, useState } from 'react'
 import { Contact } from 'types'
 
 type InputArrayItemProps = {
@@ -34,6 +34,7 @@ const ContactForm = (props: ContactFormProps) => {
   const [inputName, nameHandler] = useTextField({
     initialValue: props.initialItem ? props.initialItem.fullName : '',
   })
+  const [isItemEmpty, setIsItemEmpty] = useState(false)
   const [listContact, setListContact] = useState<InputArrayItemProps[]>(
     initialListContact
       ? initialListContact
@@ -45,12 +46,22 @@ const ContactForm = (props: ContactFormProps) => {
           },
         ]
   )
+  const isAllEmpty = useMemo(() => {
+    return listContact.every((item) => item.value === '')
+  }, [listContact])
 
   const submit = () => {
     const isNameError = nameHandler.checkError()
 
     if (isNameError) {
       console.log('Input error !')
+      return
+    }
+
+    const isAllEmpty = listContact.every((item) => item.value === '')
+    setIsItemEmpty(isAllEmpty)
+
+    if (isAllEmpty) {
       return
     }
 
@@ -119,6 +130,16 @@ const ContactForm = (props: ContactFormProps) => {
       <Button fullWidth color="primary" variant="contained" onClick={submit}>
         {props.variant === 'ADD' ? 'Tambah' : 'Simpan'}
       </Button>
+      {isItemEmpty ? (
+        <Typography
+          color="error"
+          textAlign="center"
+          sx={{ mt: '14px', display: 'block' }}
+          variant="caption"
+        >
+          Harap isi minimal satu nomor
+        </Typography>
+      ) : null}
     </Box>
   )
 }
