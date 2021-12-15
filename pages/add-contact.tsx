@@ -12,6 +12,7 @@ const AddContactPage: NextPage = () => {
 
   return (
     <BaseLayout>
+      <div style={{ marginTop: '150px' }}></div>
       <ContactAppBar variant="ADD" />
       <ContactForm
         variant="ADD"

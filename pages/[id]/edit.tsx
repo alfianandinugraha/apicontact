@@ -40,7 +40,7 @@ const EditContactPage: NextPage = () => {
   }, [contactId])
 
   return (
-    <>
+    <Container maxWidth="sm" sx={{ my: '150px' }}>
       <ContactAppBar
         variant="EDIT"
         onClickDelete={async () => {
@@ -77,7 +77,7 @@ const EditContactPage: NextPage = () => {
           }}
         />
       ) : null}
-    </>
+    </Container>
   )
 }
 

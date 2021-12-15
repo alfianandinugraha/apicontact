@@ -32,7 +32,9 @@ const BaseLayout = (props: BaseLayoutProps) => {
 
   return user ? (
     <>
-      <Container maxWidth="sm">{props.children}</Container>
+      <Container maxWidth="sm" sx={{ mb: '70px' }}>
+        {props.children}
+      </Container>
       <Navigation />
     </>
   ) : null

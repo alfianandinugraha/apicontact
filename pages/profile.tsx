@@ -56,7 +56,11 @@ const ProfilePage: NextPage = () => {
 
   return (
     <BaseLayout>
-      <Box display="flex" justifyContent="space-between">
+      <Box
+        display="flex"
+        justifyContent="space-between"
+        style={{ marginTop: '64px' }}
+      >
         <Typography variant="h5">Akun Saya</Typography>
         <Typography
           variant="caption"

@@ -40,7 +40,7 @@ const ContactAppBar = (props: ContactAppBarProps) => {
 
   return (
     <>
-      <AppBar position="static">
+      <AppBar position="absolute">
         <Toolbar>
           <Close
             aria-label="menu"
@@ -72,19 +72,19 @@ const ContactAppBar = (props: ContactAppBarProps) => {
             </MenuItem>
           </Menu>
         </Toolbar>
+        <Typography
+          sx={{
+            textTransform: 'uppercase',
+            backgroundColor: '#1F232A',
+            color: '#808080',
+            fontSize: '10px',
+            px: '16px',
+            py: '8px',
+          }}
+        >
+          Kontak {user?.email ?? ''}
+        </Typography>
       </AppBar>
-      <Typography
-        sx={{
-          textTransform: 'uppercase',
-          backgroundColor: '#1F232A',
-          color: '#808080',
-          fontSize: '10px',
-          px: '16px',
-          py: '8px',
-        }}
-      >
-        Kontak {user?.email ?? ''}
-      </Typography>
     </>
   )
 }
