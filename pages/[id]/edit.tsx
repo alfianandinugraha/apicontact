@@ -53,32 +53,30 @@ const EditContactPage: NextPage = () => {
           }
         }}
       />
-      <Container sx={{ mt: '30px', mb: '60px' }}>
-        {isLoading ? (
-          <Loading />
-        ) : contact ? (
-          <ContactForm
-            variant="EDIT"
-            initialItem={contact}
-            onSubmit={async (payload) => {
-              const newItems = payload.contacts.map((item) => item.value)
-              console.log('Send request...')
+      {isLoading ? (
+        <Loading />
+      ) : contact ? (
+        <ContactForm
+          variant="EDIT"
+          initialItem={contact}
+          onSubmit={async (payload) => {
+            const newItems = payload.contacts.map((item) => item.value)
+            console.log('Send request...')
 
-              try {
-                const result = await contactService.update(contactId, {
-                  fullName: payload.fullName,
-                  items: newItems,
-                })
-                setContact(result.body)
-                toast.success(<Toast>Update berhasil</Toast>)
-              } catch (err: any) {
-                console.error(err)
-                toast.success(<Toast>Terjadi kesalahan</Toast>)
-              }
-            }}
-          />
-        ) : null}
-      </Container>
+            try {
+              const result = await contactService.update(contactId, {
+                fullName: payload.fullName,
+                items: newItems,
+              })
+              setContact(result.body)
+              toast.success(<Toast>Update berhasil</Toast>)
+            } catch (err: any) {
+              console.error(err)
+              toast.success(<Toast>Terjadi kesalahan</Toast>)
+            }
+          }}
+        />
+      ) : null}
     </>
   )
 }

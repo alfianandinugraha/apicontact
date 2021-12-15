@@ -13,23 +13,21 @@ const AddContactPage: NextPage = () => {
   return (
     <BaseLayout>
       <ContactAppBar variant="ADD" />
-      <Container sx={{ mt: '30px', mb: '60px' }}>
-        <ContactForm
-          variant="ADD"
-          onSubmit={async (payload) => {
-            const items = payload.contacts
-              .map((item) => item.value)
-              .filter((value) => !!value)
+      <ContactForm
+        variant="ADD"
+        onSubmit={async (payload) => {
+          const items = payload.contacts
+            .map((item) => item.value)
+            .filter((value) => !!value)
 
-            await contactService.store({
-              ...payload,
-              items,
-            })
+          await contactService.store({
+            ...payload,
+            items,
+          })
 
-            router.back()
-          }}
-        />
-      </Container>
+          router.back()
+        }}
+      />
     </BaseLayout>
   )
 }

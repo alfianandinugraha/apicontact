@@ -1,3 +1,4 @@
+import { Container } from '@mui/material'
 import Navigation from '@src/components/navigation'
 import useAuth from '@src/stores/user'
 import { useRouter } from 'next/router'
@@ -31,7 +32,7 @@ const BaseLayout = (props: BaseLayoutProps) => {
 
   return user ? (
     <>
-      {props.children}
+      <Container maxWidth="sm">{props.children}</Container>
       <Navigation />
     </>
   ) : null

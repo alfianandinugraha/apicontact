@@ -41,46 +41,44 @@ const Home: NextPage = () => {
 
   return (
     <BaseLayout>
-      <Container>
-        <Typography
-          color="primary"
-          style={{ marginTop: '64px', marginBottom: '20px' }}
-          variant="h5"
-        >
-          APIContact
-        </Typography>
-        <SearchTextField
-          onChange={() => {
-            setIsFetching(true)
-            setContacts([])
-          }}
-          onChangeDebounce={(value) => {
-            setQuery(value)
-          }}
-        />
-        <Typography
-          variant="caption"
-          style={{
-            textTransform: 'uppercase',
-            color: '#808080',
-          }}
-        >
-          Kontak {user?.email ?? 'Shahbae3@gmail.com'}
-        </Typography>
-        {isFetching ? <Loading label="Memuat data kontak" /> : null}
-        {contacts.map((item) => {
-          return (
-            <ContactItem
-              key={item.id}
-              onClick={() => {
-                router.push(`/${item.id}/edit`)
-              }}
-            >
-              <Typography>{item.fullName}</Typography>
-            </ContactItem>
-          )
-        })}
-      </Container>
+      <Typography
+        color="primary"
+        style={{ marginTop: '64px', marginBottom: '20px' }}
+        variant="h5"
+      >
+        APIContact
+      </Typography>
+      <SearchTextField
+        onChange={() => {
+          setIsFetching(true)
+          setContacts([])
+        }}
+        onChangeDebounce={(value) => {
+          setQuery(value)
+        }}
+      />
+      <Typography
+        variant="caption"
+        style={{
+          textTransform: 'uppercase',
+          color: '#808080',
+        }}
+      >
+        Kontak {user?.email ?? 'Shahbae3@gmail.com'}
+      </Typography>
+      {isFetching ? <Loading label="Memuat data kontak" /> : null}
+      {contacts.map((item) => {
+        return (
+          <ContactItem
+            key={item.id}
+            onClick={() => {
+              router.push(`/${item.id}/edit`)
+            }}
+          >
+            <Typography>{item.fullName}</Typography>
+          </ContactItem>
+        )
+      })}
     </BaseLayout>
   )
 }

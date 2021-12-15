@@ -56,58 +56,56 @@ const ProfilePage: NextPage = () => {
 
   return (
     <BaseLayout>
-      <Container sx={{ mt: '60px' }}>
-        <Box display="flex" justifyContent="space-between">
-          <Typography variant="h5">Akun Saya</Typography>
-          <Typography
-            variant="caption"
-            color="error"
-            sx={{ display: 'flex', alignItems: 'center', cursor: 'pointer' }}
-            onClick={() => {
-              router.push('login')
-              userService.logout()
-              setUser(undefined)
-            }}
-          >
-            Logout <Logout sx={{ width: '14px', height: '14px', ml: '4px' }} />
-          </Typography>
-        </Box>
-        <TextField
-          sx={{ mt: '40px' }}
-          fullWidth
-          label="Nama"
-          onChange={nameHandler.onChange}
-          value={inputName.value}
-          error={!!inputName.errorMessage}
-          errorMessage={inputName.errorMessage}
-        />
-        <TextField
-          fullWidth
-          label="Email"
-          onChange={emailHandler.onChange}
-          value={inputEmail.value}
-          error={!!inputEmail.errorMessage}
-          errorMessage={inputEmail.errorMessage}
-        />
-        <TextField
-          fullWidth
-          label="Password"
-          type="password"
-          onChange={passwordHandler.onChange}
-          value={inputPassword.value}
-          error={!!inputPassword.errorMessage}
-          errorMessage={inputPassword.errorMessage}
-        />
-        <Button
-          variant="contained"
-          color="primary"
-          fullWidth
-          sx={{ marginTop: '40px', mb: '70px' }}
-          onClick={submit}
+      <Box display="flex" justifyContent="space-between">
+        <Typography variant="h5">Akun Saya</Typography>
+        <Typography
+          variant="caption"
+          color="error"
+          sx={{ display: 'flex', alignItems: 'center', cursor: 'pointer' }}
+          onClick={() => {
+            router.push('login')
+            userService.logout()
+            setUser(undefined)
+          }}
         >
-          Simpan
-        </Button>
-      </Container>
+          Logout <Logout sx={{ width: '14px', height: '14px', ml: '4px' }} />
+        </Typography>
+      </Box>
+      <TextField
+        sx={{ mt: '40px' }}
+        fullWidth
+        label="Nama"
+        onChange={nameHandler.onChange}
+        value={inputName.value}
+        error={!!inputName.errorMessage}
+        errorMessage={inputName.errorMessage}
+      />
+      <TextField
+        fullWidth
+        label="Email"
+        onChange={emailHandler.onChange}
+        value={inputEmail.value}
+        error={!!inputEmail.errorMessage}
+        errorMessage={inputEmail.errorMessage}
+      />
+      <TextField
+        fullWidth
+        label="Password"
+        type="password"
+        onChange={passwordHandler.onChange}
+        value={inputPassword.value}
+        error={!!inputPassword.errorMessage}
+        errorMessage={inputPassword.errorMessage}
+      />
+      <Button
+        variant="contained"
+        color="primary"
+        fullWidth
+        sx={{ marginTop: '40px', mb: '70px' }}
+        onClick={submit}
+      >
+        Simpan
+      </Button>
     </BaseLayout>
   )
 }
