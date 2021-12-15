@@ -2,7 +2,7 @@ import tokenService from '@src/services/token'
 import axios from 'axios'
 
 const httpApiProtected = axios.create({
-  baseURL: process.env.NEXT_APP_BASE_URL ?? 'http://localhost:3000/api',
+  baseURL: '/api',
 })
 
 httpApiProtected.interceptors.request.use(
@@ -16,7 +16,7 @@ httpApiProtected.interceptors.request.use(
 )
 
 const httpApi = axios.create({
-  baseURL: process.env.NEXT_APP_BASE_URL ?? 'http://localhost:3000/api',
+  baseURL: '/api',
 })
 
 export { httpApi, httpApiProtected }
