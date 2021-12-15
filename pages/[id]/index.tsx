@@ -56,7 +56,7 @@ const SinglePageContact: NextPage = () => {
           console.log(`Deleting ${contactId}...`)
           try {
             await contactService.delete(contactId)
-            router.back()
+            router.push('/')
           } catch (err) {
             console.error(err)
           }
