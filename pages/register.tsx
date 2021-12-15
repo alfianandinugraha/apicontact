@@ -47,7 +47,7 @@ const LoginPage: NextPage = () => {
     try {
       const result = await userService.register(payload)
       router.push('/')
-    } catch (err) {
+    } catch (err: any) {
       if (err.response) {
         toast.error(<Toast>{err.response.data.message}</Toast>)
       }
