@@ -1,5 +1,6 @@
 /* eslint-disable @next/next/no-img-element */
-import { Container, styled, Typography } from '@mui/material'
+import { ModeNight } from '@mui/icons-material'
+import { Box, Container, styled, Typography } from '@mui/material'
 import Loading from '@src/components/loading'
 import SearchTextField from '@src/components/search-input'
 import useTextField from '@src/hooks/use-text-field'
@@ -39,6 +40,22 @@ const Home: NextPage = () => {
     fetchContact()
   }, [query])
 
+  const EmptyComponent = () => {
+    return (
+      <Box
+        display="flex"
+        flexDirection="column"
+        alignItems="center"
+        sx={{ mt: '2rem' }}
+      >
+        <ModeNight fontSize="large" sx={{ color: '#808080', mb: '8px' }} />
+        <Typography textAlign="center" variant="caption" color="#808080">
+          Tidak ada kontak yang ditemukan
+        </Typography>
+      </Box>
+    )
+  }
+
   return (
     <BaseLayout>
       <Typography
@@ -67,6 +84,7 @@ const Home: NextPage = () => {
         Kontak {user?.email ?? 'Shahbae3@gmail.com'}
       </Typography>
       {isFetching ? <Loading label="Memuat data kontak" /> : null}
+      {!isFetching && !contacts.length ? <EmptyComponent /> : null}
       {contacts.map((item) => {
         return (
           <ContactItem
