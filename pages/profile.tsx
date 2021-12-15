@@ -10,6 +10,7 @@ import { inputErrorMessage } from '@src/const/messages'
 import { useRouter } from 'next/router'
 import userService from '@src/services/user'
 import useAuth from '@src/stores/user'
+import { UpdateUserBodyRequest } from 'types'
 
 const emailValidator = (e: any) => {
   if (!validator.isEmail(e.value)) {
@@ -31,7 +32,7 @@ const ProfilePage: NextPage = () => {
   const [inputPassword, passwordHandler] = useTextField()
   const router = useRouter()
 
-  const submit = () => {
+  const submit = async () => {
     const isNameError = nameHandler.checkError()
     const isEmailError = emailHandler.checkError()
     const isPasswordError = passwordHandler.checkError()
@@ -40,6 +41,15 @@ const ProfilePage: NextPage = () => {
       console.log('Input error !')
       return
     }
+
+    const payload: UpdateUserBodyRequest = {
+      fullName: inputName.value,
+      email: inputEmail.value,
+      password: inputPassword.value,
+    }
+    const userId = user?.id ?? ''
+
+    await userService.update(userId, payload)
 
     console.log('Send request...')
   }
