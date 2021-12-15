@@ -11,6 +11,7 @@ import userService from '@src/services/user'
 import useAuth from '@src/stores/user'
 import toast from 'react-hot-toast'
 import Toast from '@src/components/toast'
+import Head from 'next/head'
 
 const emailValidator = (e: any) => {
   if (!validator.isEmail(e.value)) {
@@ -53,6 +54,9 @@ const LoginPage: NextPage = () => {
 
   return (
     <AuthLayout>
+      <Head>
+        <title>Login | ApiContact</title>
+      </Head>
       <Box display="flex" flexDirection="column">
         <Typography
           color="primary"

@@ -11,6 +11,7 @@ import type { NextPage } from 'next'
 import { useRouter } from 'next/router'
 import { useCallback, useEffect, useState } from 'react'
 import { Contact } from 'types'
+import Head from 'next/head'
 
 const ContactItem = styled('div')({
   padding: '16px',
@@ -58,6 +59,9 @@ const Home: NextPage = () => {
 
   return (
     <BaseLayout>
+      <Head>
+        <title>Dashboard | ApiContact</title>
+      </Head>
       <Typography
         color="primary"
         style={{ marginTop: '64px', marginBottom: '20px' }}

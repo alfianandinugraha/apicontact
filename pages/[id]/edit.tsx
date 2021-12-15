@@ -9,6 +9,7 @@ import contactService from '@src/services/contact'
 import Loading from '@src/components/loading'
 import toast from 'react-hot-toast'
 import Toast from '@src/components/toast'
+import Head from 'next/head'
 
 const EditContactPage: NextPage = () => {
   const [isLoading, setIsLoading] = useState(true)
@@ -41,6 +42,9 @@ const EditContactPage: NextPage = () => {
 
   return (
     <Container maxWidth="sm" sx={{ my: '150px' }}>
+      <Head>
+        <title>Edit Kontak | ApiContact</title>
+      </Head>
       <ContactAppBar
         variant="EDIT"
         onClickDelete={async () => {

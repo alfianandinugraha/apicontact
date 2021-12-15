@@ -9,6 +9,7 @@ import Loading from '@src/components/loading'
 import { Edit } from '@mui/icons-material'
 import toast from 'react-hot-toast'
 import Toast from '@src/components/toast'
+import Head from 'next/head'
 
 const SinglePageContact: NextPage = () => {
   const [isLoading, setIsLoading] = useState(true)
@@ -50,6 +51,9 @@ const SinglePageContact: NextPage = () => {
 
   return (
     <Container maxWidth="sm" sx={{ my: '150px' }}>
+      <Head>
+        <title>Detail Kontak | ApiContact</title>
+      </Head>
       <ContactAppBar
         variant="DETAIL"
         onClickDelete={async () => {

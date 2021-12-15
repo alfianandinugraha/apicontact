@@ -8,12 +8,16 @@ import contactService from '@src/services/contact'
 import toast from 'react-hot-toast'
 import { useRouter } from 'next/router'
 import Toast from '@src/components/toast'
+import Head from 'next/head'
 
 const AddContactPage: NextPage = () => {
   const router = useRouter()
 
   return (
     <BaseLayout>
+      <Head>
+        <title>Tambah Kontak | ApiContact</title>
+      </Head>
       <div style={{ marginTop: '150px' }}></div>
       <ContactAppBar variant="ADD" />
       <ContactForm

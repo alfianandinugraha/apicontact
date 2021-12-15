@@ -11,6 +11,7 @@ import { useRouter } from 'next/router'
 import userService from '@src/services/user'
 import useAuth from '@src/stores/user'
 import { UpdateUserBodyRequest } from 'types'
+import Head from 'next/head'
 
 const emailValidator = (e: any) => {
   if (!validator.isEmail(e.value)) {
@@ -56,6 +57,9 @@ const ProfilePage: NextPage = () => {
 
   return (
     <BaseLayout>
+      <Head>
+        <title>Profile | ApiContact</title>
+      </Head>
       <Box
         display="flex"
         justifyContent="space-between"
