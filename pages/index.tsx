@@ -11,6 +11,7 @@ import Navigation from '@src/components/navigation'
 import TextField from '@src/components/text-field'
 import BaseLayout from '@src/layouts/base-layout'
 import contactService from '@src/services/contact'
+import useAuth from '@src/stores/user'
 import { nanoid } from 'nanoid'
 import type { NextPage } from 'next'
 import { useRouter } from 'next/router'
@@ -24,6 +25,7 @@ const ContactItem = styled('div')({
 })
 
 const Home: NextPage = () => {
+  const user = useAuth((state) => state.user)
   const [contacts, setContacts] = useState<Contact[]>([])
   const [isFetching, setIsFetching] = useState(true)
   const router = useRouter()
@@ -62,7 +64,7 @@ const Home: NextPage = () => {
             color: '#808080',
           }}
         >
-          Kontak Shahbae3@gmail.com
+          Kontak {user?.email ?? 'Shahbae3@gmail.com'}
         </Typography>
         {isFetching ? (
           <Box
