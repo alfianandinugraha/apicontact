@@ -19,10 +19,18 @@ const getById = async (contactId: string) => {
   return response.data
 }
 
+const deleteContact = async (contactId: string) => {
+  const response = await httpApiProtected.delete<HttpResponse>(
+    `/contacts/${contactId}`
+  )
+  return response.data
+}
+
 const contactService = {
   store,
   getAll,
   getById,
+  delete: deleteContact,
 }
 
 export default contactService

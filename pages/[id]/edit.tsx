@@ -43,8 +43,14 @@ const EditContactPage: NextPage = () => {
     <>
       <ContactAppBar
         variant="EDIT"
-        onClickDelete={() => {
+        onClickDelete={async () => {
           console.log(`Deleting ${contactId}...`)
+          try {
+            await contactService.delete(contactId)
+            router.back()
+          } catch (err) {
+            console.error(err)
+          }
         }}
       />
       <Container sx={{ mt: '30px', mb: '60px' }}>
