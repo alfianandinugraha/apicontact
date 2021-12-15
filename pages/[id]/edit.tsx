@@ -41,7 +41,12 @@ const EditContactPage: NextPage = () => {
 
   return (
     <>
-      <ContactAppBar variant="EDIT" />
+      <ContactAppBar
+        variant="EDIT"
+        onClickDelete={() => {
+          console.log(`Deleting ${contactId}...`)
+        }}
+      />
       <Container sx={{ mt: '30px', mb: '60px' }}>
         {isLoading ? (
           <Loading />

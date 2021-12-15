@@ -14,6 +14,7 @@ import React, { useMemo, useState } from 'react'
 
 type ContactAppBarProps = {
   variant: 'ADD' | 'EDIT'
+  onClickDelete?: () => void
 }
 
 const ContactAppBar = (props: ContactAppBarProps) => {
@@ -30,6 +31,11 @@ const ContactAppBar = (props: ContactAppBarProps) => {
   }
   const handleClose = () => {
     setAnchorEl(null)
+  }
+
+  const clickDelete = () => {
+    handleClose()
+    props.onClickDelete && props.onClickDelete()
   }
 
   return (
@@ -56,7 +62,7 @@ const ContactAppBar = (props: ContactAppBarProps) => {
               'aria-labelledby': 'basic-button',
             }}
           >
-            <MenuItem onClick={handleClose}>
+            <MenuItem onClick={clickDelete}>
               <ListItemIcon>
                 <Delete fontSize="small" color="error" />
               </ListItemIcon>
