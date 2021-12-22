@@ -1,8 +1,10 @@
-# Next-MUI 🎨
+# API Contact 📱
 
-Minimal set-up for [Nextjs](https://nextjs.org/) with [Material-UI](https://mui.com/) and [Typescript](https://www.typescriptlang.org/)
+API Contact App to store contact easily
 
-The core of this boilerplate is Server-side styling, you can check the code on `getInitialProps` in \_document.tsx
+- Demo: https://apicontact.vercel.app/
+- Repository: https://github.com/alfianandinugraha/apicontact
+- API Documentation: https://documenter.getpostman.com/view/11359388/UVRAJSm2
 
 ## Scripts 📜
 
