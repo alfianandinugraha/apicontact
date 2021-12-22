@@ -6,6 +6,13 @@ API Contact App to store contact easily
 - Repository: https://github.com/alfianandinugraha/apicontact
 - API Documentation: https://documenter.getpostman.com/view/11359388/UVRAJSm2
 
+## How To Run
+
+1. Install latest Nodejs version
+2. Run `npm install`
+3. Run `npm run dev`
+4. Open on http://localhost:3000
+
 ## Scripts 📜
 
 #### `yarn dev`
